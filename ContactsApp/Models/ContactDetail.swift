@@ -10,15 +10,36 @@ import Foundation
 
 struct ContactDetail {
     
-    var thumbnailImageData: Data?
     
-    var profileImageData: Data?
+    // MARK: - Properties -
     
     var firstName: String?
     
     var lastName: String?
     
-    var numbers = [String]()
+    var numbers = [ContactItem]()
+    
+    var emails = [ContactItem]()
+    
+    var thumbnailImageData: Data?
+    
+    var profileImageData: Data?
+    
+    
+    // MARK: - Initializers -
+    
+    init() { }
+    
+    init(entity: ContactDetailEntity) {
+        self.firstName = entity.firstName
+        self.lastName = entity.lastName
+        self.thumbnailImageData = entity.thumbnailImageData
+        self.profileImageData = entity.profileImageData
+        let numberItems = entity.numbers.compactMap({ ContactItem(entity: $0) })
+        self.numbers.append(contentsOf: numberItems)
+        let emailItems = entity.emails.compactMap({ ContactItem(entity: $0) })
+        self.emails.append(contentsOf: emailItems)
+    }
     
     
     // MARK: - Helper functions -
@@ -44,6 +65,31 @@ struct ContactDetail {
         }
         
         return initials
+    }
+    
+    func getNumbers() -> String {
+        var numbers = ""
+        numbers = self.numbers.compactMap({ $0.value }).joined(separator: ", ")
+        return numbers
+    }
+    
+}
+
+
+struct ContactItem {
+    
+    var label: String?
+    
+    var value: String?
+    
+    init(label: String?, value: String?) {
+        self.label = label
+        self.value = value
+    }
+    
+    init(entity: ContactItemEntity) {
+        self.label = entity.label
+        self.value = entity.value
     }
     
 }

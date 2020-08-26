@@ -24,7 +24,11 @@ class ContactListItemCell: UITableViewCell {
     
     private var initialsLabel: UILabel!
     
+    private var labelsStack: UIStackView!
+    
     private var nameLabel: UILabel!
+    
+    private var numbersLabel: UILabel!
     
     
     // MARK: - Lifecycle -
@@ -47,8 +51,9 @@ class ContactListItemCell: UITableViewCell {
         setupUI()
         
         profileImageView.image = contact.thumbnailImageData != nil ? UIImage(data: contact.thumbnailImageData!) : nil
-        nameLabel.text = contact.getFullName()
         initialsLabel.text = contact.getInitials()
+        nameLabel.text = contact.getFullName()
+        numbersLabel.text = contact.getNumbers()
     }
     
 }
@@ -63,7 +68,9 @@ extension ContactListItemCell {
         setupProfileView()
         setupInitialsLabel()
         setupProfileImageView()
+        setupLabelsStack()
         setupNameLabel()
+        setupNumbersLabel()
     }
     
     private func setupContentStack() {
@@ -103,12 +110,31 @@ extension ContactListItemCell {
         initialsLabel.edgesToSuperview()
     }
     
+    private func setupLabelsStack() {
+        guard labelsStack == nil else { return }
+        labelsStack = UIStackView()
+        labelsStack.axis = .vertical
+        labelsStack.spacing = 10
+        labelsStack.distribution = .fillProportionally
+        contentStack.addArrangedSubview(labelsStack)
+    }
+    
     private func setupNameLabel() {
         guard nameLabel == nil else { return }
         nameLabel = UILabel()
         nameLabel.textColor = .label
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        contentStack.addArrangedSubview(nameLabel)
+        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        labelsStack.addArrangedSubview(UIView())
+        labelsStack.addArrangedSubview(nameLabel)
+    }
+    
+    private func setupNumbersLabel() {
+        guard numbersLabel == nil else { return }
+        numbersLabel = UILabel()
+        numbersLabel.textColor = .secondaryLabel
+        numbersLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        labelsStack.addArrangedSubview(numbersLabel)
+        labelsStack.addArrangedSubview(UIView())
     }
     
 }

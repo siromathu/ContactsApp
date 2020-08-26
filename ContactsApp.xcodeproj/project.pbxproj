@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		295C48FCFFF8C5B6026A5165 /* Pods_ContactsAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3DF7F82B1A303202539E7F /* Pods_ContactsAppTests.framework */; };
+		2E9E301F24F6AC27005CE5FA /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E301E24F6AC27005CE5FA /* RealmManager.swift */; };
+		2E9E302024F6AC2D005CE5FA /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E301E24F6AC27005CE5FA /* RealmManager.swift */; };
+		2E9E302224F6AC97005CE5FA /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302124F6AC97005CE5FA /* KeychainManager.swift */; };
+		2E9E302324F6AC97005CE5FA /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302124F6AC97005CE5FA /* KeychainManager.swift */; };
+		2E9E302624F6BD80005CE5FA /* ContactDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302524F6BD80005CE5FA /* ContactDetailEntity.swift */; };
+		2E9E302724F6BD80005CE5FA /* ContactDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302524F6BD80005CE5FA /* ContactDetailEntity.swift */; };
+		2E9E302A24F6DA71005CE5FA /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302924F6DA71005CE5FA /* UIViewController+Extensions.swift */; };
+		2E9E302B24F6DA71005CE5FA /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302924F6DA71005CE5FA /* UIViewController+Extensions.swift */; };
+		2E9E302E24F6FA13005CE5FA /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302D24F6FA13005CE5FA /* ProfileImageTableViewCell.swift */; };
+		2E9E302F24F6FA13005CE5FA /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E302D24F6FA13005CE5FA /* ProfileImageTableViewCell.swift */; };
+		2E9E303124F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E303024F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift */; };
+		2E9E303224F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E303024F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift */; };
 		2EC643BA24F5A74100EB1F46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643B924F5A74100EB1F46 /* AppDelegate.swift */; };
 		2EC643BC24F5A74100EB1F46 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643BB24F5A74100EB1F46 /* SceneDelegate.swift */; };
 		2EC643C124F5A74100EB1F46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EC643BF24F5A74100EB1F46 /* Main.storyboard */; };
@@ -52,6 +64,12 @@
 		084A5505079660883E56657B /* Pods-ContactsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactsApp.debug.xcconfig"; path = "Target Support Files/Pods-ContactsApp/Pods-ContactsApp.debug.xcconfig"; sourceTree = "<group>"; };
 		09792B0C11E3E11517C5E5CD /* Pods-ContactsAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactsAppTests.release.xcconfig"; path = "Target Support Files/Pods-ContactsAppTests/Pods-ContactsAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		21F815EBDD9B4D2E4B010F47 /* Pods-ContactsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactsApp.release.xcconfig"; path = "Target Support Files/Pods-ContactsApp/Pods-ContactsApp.release.xcconfig"; sourceTree = "<group>"; };
+		2E9E301E24F6AC27005CE5FA /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		2E9E302124F6AC97005CE5FA /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		2E9E302524F6BD80005CE5FA /* ContactDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailEntity.swift; sourceTree = "<group>"; };
+		2E9E302924F6DA71005CE5FA /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		2E9E302D24F6FA13005CE5FA /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
+		2E9E303024F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailTableViewCell.swift; sourceTree = "<group>"; };
 		2EC643B624F5A74100EB1F46 /* ContactsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC643B924F5A74100EB1F46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EC643BB24F5A74100EB1F46 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +114,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E9E302424F6BD3F005CE5FA /* RealmModels */ = {
+			isa = PBXGroup;
+			children = (
+				2E9E302524F6BD80005CE5FA /* ContactDetailEntity.swift */,
+			);
+			path = RealmModels;
+			sourceTree = "<group>";
+		};
+		2E9E302824F6DA5F005CE5FA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2E9E302924F6DA71005CE5FA /* UIViewController+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2E9E302C24F6F9EE005CE5FA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2E9E302D24F6FA13005CE5FA /* ProfileImageTableViewCell.swift */,
+				2E9E303024F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		2E9E303324F6FCDC005CE5FA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2EC643E924F5A82200EB1F46 /* ContactDetailViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		2EC643AD24F5A74100EB1F46 = {
 			isa = PBXGroup;
 			children = (
@@ -121,8 +172,10 @@
 			children = (
 				2EC643DB24F5A75300EB1F46 /* AppDelegate */,
 				2EC643DF24F5A78500EB1F46 /* Assets */,
+				2E9E302824F6DA5F005CE5FA /* Extensions */,
 				2EC643E324F5A7D400EB1F46 /* Managers */,
 				2EC643F924F5B5FD00EB1F46 /* Models */,
+				2E9E302424F6BD3F005CE5FA /* RealmModels */,
 				2EC643DC24F5A76800EB1F46 /* Screens */,
 				2EC643DE24F5A77B00EB1F46 /* Storyboards */,
 				2EC643DD24F5A76F00EB1F46 /* SupportingFiles */,
@@ -197,7 +250,8 @@
 		2EC643E124F5A7B300EB1F46 /* ContactDetail */ = {
 			isa = PBXGroup;
 			children = (
-				2EC643E924F5A82200EB1F46 /* ContactDetailViewController.swift */,
+				2E9E302C24F6F9EE005CE5FA /* Cells */,
+				2E9E303324F6FCDC005CE5FA /* Controllers */,
 			);
 			path = ContactDetail;
 			sourceTree = "<group>";
@@ -214,7 +268,9 @@
 			isa = PBXGroup;
 			children = (
 				2EC643F324F5B5A300EB1F46 /* ContactsManager.swift */,
+				2E9E302124F6AC97005CE5FA /* KeychainManager.swift */,
 				2EC643F624F5B5C100EB1F46 /* PermissionsManager.swift */,
+				2E9E301E24F6AC27005CE5FA /* RealmManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -450,15 +506,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E9E301F24F6AC27005CE5FA /* RealmManager.swift in Sources */,
 				2EC643F124F5A8EA00EB1F46 /* InitialViewController.swift in Sources */,
 				2EC643EA24F5A82200EB1F46 /* ContactDetailViewController.swift in Sources */,
 				2EC643FE24F60E8D00EB1F46 /* ContactGroup.swift in Sources */,
+				2E9E303124F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift in Sources */,
+				2E9E302E24F6FA13005CE5FA /* ProfileImageTableViewCell.swift in Sources */,
 				2EC6440524F614EC00EB1F46 /* ContactListItemCell.swift in Sources */,
+				2E9E302624F6BD80005CE5FA /* ContactDetailEntity.swift in Sources */,
 				2EC643F724F5B5C100EB1F46 /* PermissionsManager.swift in Sources */,
 				2EC643ED24F5A83600EB1F46 /* ContactPermissionViewController.swift in Sources */,
 				2EC643FB24F5B60F00EB1F46 /* ContactDetail.swift in Sources */,
 				2EC643BA24F5A74100EB1F46 /* AppDelegate.swift in Sources */,
+				2E9E302224F6AC97005CE5FA /* KeychainManager.swift in Sources */,
 				2EC643E724F5A81600EB1F46 /* ContactsListViewController.swift in Sources */,
+				2E9E302A24F6DA71005CE5FA /* UIViewController+Extensions.swift in Sources */,
 				2EC6440224F6129400EB1F46 /* ContactSortType.swift in Sources */,
 				2EC643BC24F5A74100EB1F46 /* SceneDelegate.swift in Sources */,
 				2EC643F424F5B5A300EB1F46 /* ContactsManager.swift in Sources */,
@@ -469,11 +531,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E9E302324F6AC97005CE5FA /* KeychainManager.swift in Sources */,
 				2EC643F224F5A8EA00EB1F46 /* InitialViewController.swift in Sources */,
 				2EC643F824F5B5C100EB1F46 /* PermissionsManager.swift in Sources */,
 				2EC643EE24F5A83600EB1F46 /* ContactPermissionViewController.swift in Sources */,
+				2E9E302F24F6FA13005CE5FA /* ProfileImageTableViewCell.swift in Sources */,
+				2E9E303224F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift in Sources */,
 				2EC643E824F5A81600EB1F46 /* ContactsListViewController.swift in Sources */,
 				2EC643FF24F60E8D00EB1F46 /* ContactGroup.swift in Sources */,
+				2E9E302724F6BD80005CE5FA /* ContactDetailEntity.swift in Sources */,
+				2E9E302B24F6DA71005CE5FA /* UIViewController+Extensions.swift in Sources */,
+				2E9E302024F6AC2D005CE5FA /* RealmManager.swift in Sources */,
 				2EC643EB24F5A82200EB1F46 /* ContactDetailViewController.swift in Sources */,
 				2EC6440624F614EC00EB1F46 /* ContactListItemCell.swift in Sources */,
 				2EC643FC24F5B60F00EB1F46 /* ContactDetail.swift in Sources */,

@@ -1,16 +1,30 @@
 PODS:
+  - KeychainSwift (19.0.0)
+  - Realm (5.0.3):
+    - Realm/Headers (= 5.0.3)
+  - Realm/Headers (5.0.3)
+  - RealmSwift (5.0.3):
+    - Realm (= 5.0.3)
   - TinyConstraints (4.0.1)
 
 DEPENDENCIES:
+  - KeychainSwift
+  - RealmSwift
   - TinyConstraints
 
 SPEC REPOS:
   trunk:
+    - KeychainSwift
+    - Realm
+    - RealmSwift
     - TinyConstraints
 
 SPEC CHECKSUMS:
+  KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
+  Realm: bfca1699b61b0b17c3a69ae0e648314eae91fbdb
+  RealmSwift: 493c9f089cd3893b3959007973c0e4f640906ba0
   TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
 
-PODFILE CHECKSUM: 9ad18702af94ecb480b72d86619540c852e8a494
+PODFILE CHECKSUM: 033227a0d178a34b32f1ed7011835f85767d8aeb
 
 COCOAPODS: 1.8.4

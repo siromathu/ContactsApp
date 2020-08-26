@@ -7,11 +7,15 @@ target 'ContactsApp' do
 
   # Pods for ContactsApp
   pod 'TinyConstraints'
+  pod 'RealmSwift'
+  pod 'KeychainSwift'
 
   target 'ContactsAppTests' do
     inherit! :search_paths
     # Pods for testing
     pod 'TinyConstraints'
+    pod 'RealmSwift'
+    pod 'KeychainSwift'
   end
 
 end
