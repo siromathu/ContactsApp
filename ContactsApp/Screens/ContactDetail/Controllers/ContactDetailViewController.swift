@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import MessageUI
 
 class ContactDetailViewController: UIViewController {
 
     
     // MARK: - Properties -
     
-    var contact: ContactDetail!
+    var contact: ContactDetailEntity!
     
     
     // MARK: - Controls -
@@ -41,6 +42,55 @@ extension ContactDetailViewController {
     
     @IBAction func dismiss(sender: UIButton) {
         DispatchQueue.main.async { self.dismiss(animated: true, completion: nil) }
+    }
+}
+
+
+// MARK: - Helper functions -
+
+extension ContactDetailViewController {
+    
+    private func callNumber(phoneNumber: String?) {
+        guard let number = phoneNumber,
+            let url = URL(string: "telprompt://\(number)") else {
+            showAlert(title: "Error", message: "Invalid phone number")
+            return
+        }
+        
+        guard UIApplication.shared.canOpenURL(url) else {
+            showAlert(title: "Error", message: "Calling is allowed only in physical device")
+            return
+        }
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    private func sendEmail(id: String?) {
+        guard let email = id else {
+            showAlert(title: "Error", message: "Invalid email address")
+            return
+        }
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            showAlert(title: "Error", message: "Cannot send email, please make sure email is setup in your device")
+            return
+        }
+        
+        let mail = MFMailComposeViewController()
+        mail.mailComposeDelegate = self
+        mail.setToRecipients([email])
+        DispatchQueue.main.async {self.present(mail, animated: true) }
+    }
+    
+}
+
+
+// MARK: - Mail composer -
+
+extension ContactDetailViewController: MFMailComposeViewControllerDelegate {
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }
 
@@ -118,6 +168,19 @@ extension ContactDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 2:
+            let number = contact.numbers[indexPath.row].value
+            callNumber(phoneNumber: number)
+        case 3:
+            let email = contact.emails[indexPath.row].value
+            sendEmail(id: email)
+        default:
+            break
+        }
     }
     
 }

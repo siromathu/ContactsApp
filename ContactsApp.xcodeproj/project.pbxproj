@@ -30,16 +30,12 @@
 		2EC643E824F5A81600EB1F46 /* ContactsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643E624F5A81600EB1F46 /* ContactsListViewController.swift */; };
 		2EC643EA24F5A82200EB1F46 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643E924F5A82200EB1F46 /* ContactDetailViewController.swift */; };
 		2EC643EB24F5A82200EB1F46 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643E924F5A82200EB1F46 /* ContactDetailViewController.swift */; };
-		2EC643ED24F5A83600EB1F46 /* ContactPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643EC24F5A83600EB1F46 /* ContactPermissionViewController.swift */; };
-		2EC643EE24F5A83600EB1F46 /* ContactPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643EC24F5A83600EB1F46 /* ContactPermissionViewController.swift */; };
 		2EC643F124F5A8EA00EB1F46 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643F024F5A8EA00EB1F46 /* InitialViewController.swift */; };
 		2EC643F224F5A8EA00EB1F46 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643F024F5A8EA00EB1F46 /* InitialViewController.swift */; };
 		2EC643F424F5B5A300EB1F46 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643F324F5B5A300EB1F46 /* ContactsManager.swift */; };
 		2EC643F524F5B5A300EB1F46 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643F324F5B5A300EB1F46 /* ContactsManager.swift */; };
 		2EC643F724F5B5C100EB1F46 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643F624F5B5C100EB1F46 /* PermissionsManager.swift */; };
 		2EC643F824F5B5C100EB1F46 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643F624F5B5C100EB1F46 /* PermissionsManager.swift */; };
-		2EC643FB24F5B60F00EB1F46 /* ContactDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643FA24F5B60F00EB1F46 /* ContactDetail.swift */; };
-		2EC643FC24F5B60F00EB1F46 /* ContactDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643FA24F5B60F00EB1F46 /* ContactDetail.swift */; };
 		2EC643FE24F60E8D00EB1F46 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643FD24F60E8D00EB1F46 /* ContactGroup.swift */; };
 		2EC643FF24F60E8D00EB1F46 /* ContactGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC643FD24F60E8D00EB1F46 /* ContactGroup.swift */; };
 		2EC6440224F6129400EB1F46 /* ContactSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC6440124F6129400EB1F46 /* ContactSortType.swift */; };
@@ -82,11 +78,9 @@
 		2EC643D224F5A74300EB1F46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EC643E624F5A81600EB1F46 /* ContactsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListViewController.swift; sourceTree = "<group>"; };
 		2EC643E924F5A82200EB1F46 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
-		2EC643EC24F5A83600EB1F46 /* ContactPermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPermissionViewController.swift; sourceTree = "<group>"; };
 		2EC643F024F5A8EA00EB1F46 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		2EC643F324F5B5A300EB1F46 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		2EC643F624F5B5C100EB1F46 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
-		2EC643FA24F5B60F00EB1F46 /* ContactDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetail.swift; sourceTree = "<group>"; };
 		2EC643FD24F60E8D00EB1F46 /* ContactGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactGroup.swift; sourceTree = "<group>"; };
 		2EC6440124F6129400EB1F46 /* ContactSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSortType.swift; sourceTree = "<group>"; };
 		2EC6440424F614EC00EB1F46 /* ContactListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListItemCell.swift; sourceTree = "<group>"; };
@@ -145,6 +139,22 @@
 				2EC643E924F5A82200EB1F46 /* ContactDetailViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2EA02D0824F80D8000C5C24D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2EC643E624F5A81600EB1F46 /* ContactsListViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2EA02D0924F80D8600C5C24D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2EC6440424F614EC00EB1F46 /* ContactListItemCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		2EC643AD24F5A74100EB1F46 = {
@@ -206,7 +216,6 @@
 			isa = PBXGroup;
 			children = (
 				2EC643EF24F5A8C800EB1F46 /* Initial */,
-				2EC643E224F5A7B900EB1F46 /* ContactPermission */,
 				2EC643E124F5A7B300EB1F46 /* ContactDetail */,
 				2EC643E024F5A7A700EB1F46 /* ContactsList */,
 			);
@@ -241,8 +250,8 @@
 		2EC643E024F5A7A700EB1F46 /* ContactsList */ = {
 			isa = PBXGroup;
 			children = (
-				2EC643E624F5A81600EB1F46 /* ContactsListViewController.swift */,
-				2EC6440424F614EC00EB1F46 /* ContactListItemCell.swift */,
+				2EA02D0824F80D8000C5C24D /* Controllers */,
+				2EA02D0924F80D8600C5C24D /* Cells */,
 			);
 			path = ContactsList;
 			sourceTree = "<group>";
@@ -254,14 +263,6 @@
 				2E9E303324F6FCDC005CE5FA /* Controllers */,
 			);
 			path = ContactDetail;
-			sourceTree = "<group>";
-		};
-		2EC643E224F5A7B900EB1F46 /* ContactPermission */ = {
-			isa = PBXGroup;
-			children = (
-				2EC643EC24F5A83600EB1F46 /* ContactPermissionViewController.swift */,
-			);
-			path = ContactPermission;
 			sourceTree = "<group>";
 		};
 		2EC643E324F5A7D400EB1F46 /* Managers */ = {
@@ -286,7 +287,6 @@
 		2EC643F924F5B5FD00EB1F46 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2EC643FA24F5B60F00EB1F46 /* ContactDetail.swift */,
 				2EC643FD24F60E8D00EB1F46 /* ContactGroup.swift */,
 			);
 			path = Models;
@@ -515,8 +515,6 @@
 				2EC6440524F614EC00EB1F46 /* ContactListItemCell.swift in Sources */,
 				2E9E302624F6BD80005CE5FA /* ContactDetailEntity.swift in Sources */,
 				2EC643F724F5B5C100EB1F46 /* PermissionsManager.swift in Sources */,
-				2EC643ED24F5A83600EB1F46 /* ContactPermissionViewController.swift in Sources */,
-				2EC643FB24F5B60F00EB1F46 /* ContactDetail.swift in Sources */,
 				2EC643BA24F5A74100EB1F46 /* AppDelegate.swift in Sources */,
 				2E9E302224F6AC97005CE5FA /* KeychainManager.swift in Sources */,
 				2EC643E724F5A81600EB1F46 /* ContactsListViewController.swift in Sources */,
@@ -534,7 +532,6 @@
 				2E9E302324F6AC97005CE5FA /* KeychainManager.swift in Sources */,
 				2EC643F224F5A8EA00EB1F46 /* InitialViewController.swift in Sources */,
 				2EC643F824F5B5C100EB1F46 /* PermissionsManager.swift in Sources */,
-				2EC643EE24F5A83600EB1F46 /* ContactPermissionViewController.swift in Sources */,
 				2E9E302F24F6FA13005CE5FA /* ProfileImageTableViewCell.swift in Sources */,
 				2E9E303224F6FA7F005CE5FA /* ProfileDetailTableViewCell.swift in Sources */,
 				2EC643E824F5A81600EB1F46 /* ContactsListViewController.swift in Sources */,
@@ -544,7 +541,6 @@
 				2E9E302024F6AC2D005CE5FA /* RealmManager.swift in Sources */,
 				2EC643EB24F5A82200EB1F46 /* ContactDetailViewController.swift in Sources */,
 				2EC6440624F614EC00EB1F46 /* ContactListItemCell.swift in Sources */,
-				2EC643FC24F5B60F00EB1F46 /* ContactDetail.swift in Sources */,
 				2EC643F524F5B5A300EB1F46 /* ContactsManager.swift in Sources */,
 				2EC6440324F6129400EB1F46 /* ContactSortType.swift in Sources */,
 				2EC643D124F5A74300EB1F46 /* ContactsAppTests.swift in Sources */,
@@ -701,6 +697,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN7Y8U3X4G;
 				INFOPLIST_FILE = "$(SRCROOT)/ContactsApp/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -720,6 +717,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN7Y8U3X4G;
 				INFOPLIST_FILE = "$(SRCROOT)/ContactsApp/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

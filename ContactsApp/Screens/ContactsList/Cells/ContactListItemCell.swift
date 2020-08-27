@@ -47,7 +47,7 @@ class ContactListItemCell: UITableViewCell {
     
     // MARK: - Pubic helper functions -
     
-    func configure(contact: ContactDetail) {
+    func configure(contact: ContactDetailEntity) {
         setupUI()
         
         profileImageView.image = contact.thumbnailImageData != nil ? UIImage(data: contact.thumbnailImageData!) : nil

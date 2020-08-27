@@ -27,21 +27,6 @@ class ContactDetailEntity: Object {
     var emails = List<ContactItemEntity>()
     
     
-    // MARK: - Initializers -
-    
-    convenience init(contact: ContactDetail) {
-        self.init()
-        self.firstName = contact.firstName
-        self.lastName = contact.lastName
-        self.thumbnailImageData = contact.thumbnailImageData
-        self.profileImageData = contact.profileImageData
-        let numberItems = contact.numbers.compactMap({ ContactItemEntity(item: $0) })
-        self.numbers.append(objectsIn: numberItems)
-        let emailItems = contact.emails.compactMap({ ContactItemEntity(item: $0) })
-        self.emails.append(objectsIn: emailItems)
-    }
-    
-    
     // MARK: - Helper functions -
     
     func getFullName() -> String {
@@ -81,10 +66,4 @@ class ContactItemEntity: Object {
     @objc dynamic var label: String?
     
     @objc dynamic var value: String?
-    
-    convenience init(item: ContactItem) {
-        self.init()
-        self.label = item.label
-        self.value = item.value
-    }
 }

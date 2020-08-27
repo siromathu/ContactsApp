@@ -68,11 +68,11 @@ class RealmManager {
 
 extension RealmManager {
     
-    class func fetchAllContacts() -> [ContactDetail]? {
+    class func fetchAllContacts() -> [ContactDetailEntity]? {
         do {
             let realm = try Realm()
             let results = realm.objects(ContactDetailEntity.self)
-            let contacts = results.toArray().compactMap({ ContactDetail(entity: $0) })
+            let contacts = results.toArray() // .compactMap({ ContactDetail(entity: $0) })
             return contacts
 
         } catch {
@@ -81,13 +81,11 @@ extension RealmManager {
         }
     }
     
-    class func insert(contacts: [ContactDetail]) {
+    class func insert(contacts: [ContactDetailEntity]) {
         do {
             let realm = try Realm()
-            let entities = contacts.compactMap({ ContactDetailEntity(contact: $0) })
-            
             try realm.write {
-                for entity in entities {
+                for entity in contacts {
                     realm.add(entity)
                 }
             }
@@ -97,13 +95,11 @@ extension RealmManager {
         }
     }
     
-    class func insert(contact: ContactDetail) {
+    class func insert(contact: ContactDetailEntity) {
         do {
             let realm = try Realm()
-            let entity = ContactDetailEntity(contact: contact)
-            
             try realm.write {
-                realm.add(entity)
+                realm.add(contact)
             }
 
         } catch {

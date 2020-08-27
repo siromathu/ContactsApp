@@ -12,6 +12,6 @@ struct ContactGroup {
     
     var title: String?
     
-    var contacts = [ContactDetail]()
+    var contacts = [ContactDetailEntity]()
     
 }

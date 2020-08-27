@@ -13,7 +13,7 @@ class ContactsListViewController: UIViewController {
     
     // MARK: - Properties -
     
-    private var allContacts = [ContactDetail]()
+    private var allContacts = [ContactDetailEntity]()
     
     private var allGroups = [ContactGroup]()
     
@@ -322,7 +322,7 @@ extension ContactsListViewController {
         }
     }
     
-    private func showContactDetailViewController(contact: ContactDetail) {
+    private func showContactDetailViewController(contact: ContactDetailEntity) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let con = storyBoard.instantiateViewController(withIdentifier: "ContactDetailViewController") as! ContactDetailViewController
         con.contact = contact

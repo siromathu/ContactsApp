@@ -40,8 +40,8 @@ enum ContactsManager {
         }
     }
     
-    static func fetchAll() -> [ContactDetail] {
-        var contacts = [ContactDetail]()
+    static func fetchAll() -> [ContactDetailEntity] {
+        var contacts = [ContactDetailEntity]()
         
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { isGranted, error in
@@ -52,19 +52,30 @@ enum ContactsManager {
                 
                 do {
                     try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                        var newContact = ContactDetail()
+                        let newContact = ContactDetailEntity()
                         newContact.firstName = contact.givenName
                         newContact.lastName = contact.familyName
                         newContact.thumbnailImageData = contact.thumbnailImageData
                         newContact.profileImageData = contact.imageData
-                        newContact.numbers = contact.phoneNumbers.compactMap({ number -> ContactItem in
+                        
+                        let numbers = contact.phoneNumbers.compactMap({ number -> ContactItemEntity in
                             let localizedLabel = CNLabeledValue<NSString>.localizedString(forLabel: number.label ?? "")
-                            return ContactItem(label: localizedLabel, value: number.value.stringValue)
+                            let entity = ContactItemEntity()
+                            entity.label = localizedLabel
+                            entity.value = number.value.stringValue
+                            return entity
                         })
-                        newContact.emails = contact.emailAddresses.compactMap({ email -> ContactItem in
+                        newContact.numbers.append(objectsIn: numbers)
+                        
+                        let emails = contact.emailAddresses.compactMap({ email -> ContactItemEntity in
                             let localizedLabel = CNLabeledValue<NSString>.localizedString(forLabel: email.label ?? "")
-                            return ContactItem(label: localizedLabel, value: String(email.value))
+                            let entity = ContactItemEntity()
+                            entity.label = localizedLabel
+                            entity.value = String(email.value)
+                            return entity
                         })
+                        newContact.emails.append(objectsIn: emails)
+                        
                         contacts.append(newContact)
                     })
                     
@@ -77,7 +88,7 @@ enum ContactsManager {
         return contacts
     }
     
-    static func sort(contacts: [ContactDetail], by type: ContactSortType) -> [ContactGroup] {
+    static func sort(contacts: [ContactDetailEntity], by type: ContactSortType) -> [ContactGroup] {
         // Separate contacts based on first character of first name
         let grouped = Dictionary(grouping: contacts, by: { $0.firstName!.first })
         var contactsGroups = [ContactGroup]()
