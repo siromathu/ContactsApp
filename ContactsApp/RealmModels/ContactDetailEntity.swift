@@ -14,56 +14,38 @@ class ContactDetailEntity: Object {
     
     // MARK: - Properties -
     
-    @objc dynamic var thumbnailImageData: Data?
-    
-    @objc dynamic var profileImageData: Data?
+    @objc dynamic var id: String?
     
     @objc dynamic var firstName: String?
     
     @objc dynamic var lastName: String?
+    
+    @objc dynamic var thumbnailImageData: Data?
+    
+    @objc dynamic var profileImageData: Data?
     
     var numbers = List<ContactItemEntity>()
     
     var emails = List<ContactItemEntity>()
     
     
-    // MARK: - Helper functions -
+    // MARK: - Initializers -
     
-    func getFullName() -> String {
-        var fullName = ""
-        if firstName != nil { fullName = fullName + firstName! }
-        if lastName != nil {
-            if !fullName.isEmpty { fullName = fullName + " " }
-            fullName = fullName + lastName!
-        }
-        return fullName
+    convenience init(contact: ContactDetail) {
+        self.init()
+        self.id = contact.id
+        self.firstName = contact.firstName
+        self.lastName = contact.lastName
+        self.thumbnailImageData = contact.thumbnailImageData
+        self.profileImageData = contact.profileImageData
+        let numberItems = contact.numbers.compactMap({ ContactItemEntity(item: $0) })
+        self.numbers.append(objectsIn: numberItems)
+        let emailItems = contact.emails.compactMap({ ContactItemEntity(item: $0) })
+        self.emails.append(objectsIn: emailItems)
     }
     
-    func getInitials() -> String {
-        var initials = ""
-        if firstName != nil, !firstName!.isEmpty {
-            initials = initials + String(firstName!.first!)
-        }
-        
-        if lastName != nil, !lastName!.isEmpty {
-            initials = initials + String(lastName!.first!)
-        }
-        
-        return initials
+    override class func primaryKey() -> String? {
+        return "id"
     }
     
-    func getNumbers() -> String {
-        var numbers = ""
-        numbers = self.numbers.compactMap({ $0.value }).joined(separator: ", ")
-        return numbers
-    }
-    
-}
-
-
-class ContactItemEntity: Object {
-    
-    @objc dynamic var label: String?
-    
-    @objc dynamic var value: String?
 }

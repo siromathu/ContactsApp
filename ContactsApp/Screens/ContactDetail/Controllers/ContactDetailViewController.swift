@@ -14,7 +14,7 @@ class ContactDetailViewController: UIViewController {
     
     // MARK: - Properties -
     
-    var contact: ContactDetailEntity!
+    var contact: ContactDetail!
     
     
     // MARK: - Controls -
@@ -51,7 +51,7 @@ extension ContactDetailViewController {
 extension ContactDetailViewController {
     
     private func callNumber(phoneNumber: String?) {
-        guard let number = phoneNumber,
+        guard let number = phoneNumber?.replacingOccurrences(of: " ", with: ""),
             let url = URL(string: "telprompt://\(number)") else {
             showAlert(title: "Error", message: "Invalid phone number")
             return

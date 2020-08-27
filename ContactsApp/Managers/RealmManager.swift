@@ -68,11 +68,11 @@ class RealmManager {
 
 extension RealmManager {
     
-    class func fetchAllContacts() -> [ContactDetailEntity]? {
+    class func fetchAllContacts() -> [ContactDetail]? {
         do {
             let realm = try Realm()
             let results = realm.objects(ContactDetailEntity.self)
-            let contacts = results.toArray() // .compactMap({ ContactDetail(entity: $0) })
+            let contacts = results.toArray().compactMap({ ContactDetail(entity: $0) })
             return contacts
 
         } catch {
@@ -81,11 +81,12 @@ extension RealmManager {
         }
     }
     
-    class func insert(contacts: [ContactDetailEntity]) {
+    class func insert(contacts: [ContactDetail]) {
         do {
             let realm = try Realm()
+            let entities = contacts.compactMap({ ContactDetailEntity(contact: $0) })
             try realm.write {
-                for entity in contacts {
+                for entity in entities {
                     realm.add(entity)
                 }
             }
@@ -95,13 +96,33 @@ extension RealmManager {
         }
     }
     
-    class func insert(contact: ContactDetailEntity) {
+    class func insert(contact: ContactDetail) {
         do {
             let realm = try Realm()
+            let entity = ContactDetailEntity(contact: contact)
             try realm.write {
-                realm.add(contact)
+                realm.add(entity)
             }
 
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
+    }
+    
+    class func updateContacts() {
+        
+    }
+    
+    class func deleteAllContacts() {
+        do {
+            let realm = try Realm()
+            let contacts = realm.objects(ContactDetailEntity.self).toArray()
+            try realm.write {
+                for contact in contacts {
+                    realm.delete(contact, cascading: true)
+                }
+            }
+            
         } catch {
             debugPrint(error.localizedDescription)
         }
@@ -111,10 +132,70 @@ extension RealmManager {
 
 
 
+// MARK: - Helper functions -
+
 extension Results {
-   func toArray() -> [Element] {
-     return compactMap {
-       $0
-     }
-   }
+    
+    func toArray() -> [Element] {
+        return self.map{$0}
+    }
+}
+
+extension RealmSwift.List {
+    
+    func toArray() -> [Any] {
+        return self.map{$0}
+    }
+}
+
+// MARK: - Realm Helper functions
+
+protocol CascadeDeleting {
+    func delete<S: Sequence>(_ objects: S, cascading: Bool) where S.Iterator.Element: Object
+    func delete<Entity: Object>(_ entity: Entity, cascading: Bool)
+}
+
+extension Realm: CascadeDeleting {
+    func delete<S: Sequence>(_ objects: S, cascading: Bool) where S.Iterator.Element: Object {
+        for obj in objects {
+            delete(obj, cascading: cascading)
+        }
+    }
+    
+    func delete<Entity: Object>(_ entity: Entity, cascading: Bool) {
+        if cascading {
+            cascadeDelete(entity)
+        } else {
+            delete(entity)
+        }
+    }
+}
+
+private extension Realm {
+    private func cascadeDelete(_ entity: RLMObjectBase) {
+        guard let entity = entity as? Object else { return }
+        var toBeDeleted = Set<RLMObjectBase>()
+        toBeDeleted.insert(entity)
+        while !toBeDeleted.isEmpty {
+            guard let element = toBeDeleted.removeFirst() as? Object,
+                !element.isInvalidated else { continue }
+            resolve(element: element, toBeDeleted: &toBeDeleted)
+        }
+    }
+    
+    private func resolve(element: Object, toBeDeleted: inout Set<RLMObjectBase>) {
+        element.objectSchema.properties.forEach {
+            guard let value = element.value(forKey: $0.name) else { return }
+            if let entity = value as? RLMObjectBase {
+                toBeDeleted.insert(entity)
+            } else if let list = value as? RealmSwift.ListBase {
+                for index in 0 ..< list._rlmArray.count {
+                    if let realmObject = list._rlmArray.object(at: index) as? RLMObjectBase {
+                        toBeDeleted.insert(realmObject)
+                    }
+                }
+            }
+        }
+        delete(element)
+    }
 }

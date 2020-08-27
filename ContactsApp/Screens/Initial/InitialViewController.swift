@@ -29,7 +29,8 @@ extension InitialViewController {
     
     private func setupLogo() {
         let img = UIImageView()
-        img.backgroundColor = UIColor.systemRed
+        img.backgroundColor = .clear
+        img.image = #imageLiteral(resourceName: "app_logo")
         view.addSubview(img)
         img.centerInSuperview()
         img.width(150)

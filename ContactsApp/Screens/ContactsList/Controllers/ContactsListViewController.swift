@@ -7,19 +7,27 @@
 //
 
 import UIKit
+import Contacts
 
 class ContactsListViewController: UIViewController {
     
     
     // MARK: - Properties -
     
-    private var allContacts = [ContactDetailEntity]()
+    /// Replacement value type objects instead of directly using Realm reference type objects to avoid threading issues
+    var allContacts = [ContactDetail]() {
+        didSet {
+            if self.footerLabel != nil {
+                self.footerLabel.text = "\(self.allContacts.count) contacts"
+            }
+        }
+    }
     
     private var allGroups = [ContactGroup]()
     
     private var filteredGroups = [ContactGroup]()
     
-    private var sortType = ContactSortType.firstNameAscending
+    private var isContactsUpdated = false
     
     
     // MARK: - Controls -
@@ -47,6 +55,10 @@ class ContactsListViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.CNContactStoreDidChange, object: nil)
+    }
 
 }
 
@@ -68,7 +80,10 @@ extension ContactsListViewController {
         
         // Will start fetching contacts in Realm first
         // If no contacts found, will try fetching from phone contacts
-        fetchContacts()
+        fetchContactsFromDB()
+        
+        // Register for contacts update notification
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshContacts), name: NSNotification.Name.CNContactStoreDidChange, object: nil)
     }
     
     private func setupTitleLabel() {
@@ -210,10 +225,10 @@ extension ContactsListViewController {
         case .notDetermined:
             ContactsManager.getPermission { isGranted in
                 self.updateUI()
-                if isGranted { self.fetchContacts() }
+                if isGranted { self.fetchContactsFromPhone() }
             }
         case .granted:
-            fetchContacts()
+            fetchContactsFromDB()
         case .denied:
             openSettings()
         }
@@ -225,70 +240,111 @@ extension ContactsListViewController {
 
 extension ContactsListViewController {
     
-    private func fetchContacts() {
+    private func fetchContactsFromDB() {
         allContacts.removeAll()
         allGroups.removeAll()
         filteredGroups.removeAll()
         
         // Get contacts from DB
-        let status = ContactsManager.checkPermission()
+        // If no countacts are found in DB, its probable because its the first time app is allowed to fetch contacts from phone
         if let contacts = RealmManager.fetchAllContacts(), !contacts.isEmpty {
             allContacts.append(contentsOf: contacts)
-            allGroups = ContactsManager.sort(contacts: allContacts, by: .firstNameAscending)
+            allGroups = ContactsManager.sort(contacts: allContacts)
             filteredGroups.append(contentsOf: allGroups)
             
             DispatchQueue.main.async {
                 self.permissionView.isHidden = true
                 self.contentStack.isHidden = false
-                self.footerLabel.text = "\(self.allContacts.count) contacts"
                 self.tableView.reloadData()
             }
             
             // Will fetch contacts in background and update Realm if required
             // Will alert user if permission is denied or not available and that contacts are not upto date
-            if status == .granted {
+            if ContactsManager.checkPermission() == .granted {
+                // TODO: - App will not get notification when suspended or not running, But too heavy a task to do everytime app is opened, will have to figure out something else -
+                fetchContactsFromPhone()
                 
             } else {
-                let title = "Alert!!!"
                 let message = "Contacts from your phone and ContactsApp are not in sync because you have not granted permission to access them. What you are viewing now is the contacts fetched last time the permission was granted."
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                let openSettingsAction = UIAlertAction(title: "Open Settings", style: .default) { _ in
-                    self.openSettings()
-                }
-                alert.addAction(okAction)
-                alert.addAction(openSettingsAction)
-                DispatchQueue.main.async { self.present(alert, animated: true, completion: nil) }
+                showOpenSettingsAlert(message: message)
             }
-            
+   
         } else {
-            switch status {
-            case .granted:
-                allContacts.append(contentsOf: ContactsManager.fetchAll())
-                RealmManager.insert(contacts: allContacts)
+            fetchContactsFromPhone()
+        }
+    }
+    
+    private func fetchContactsFromPhone(isBackground: Bool = false) {
+        switch ContactsManager.checkPermission() {
+        case .granted:
+            DispatchQueue.main.async { self.view.showLoader(message: "Fetching contacts") }
+            
+            ContactsManager.fetchAll { contacts in
+                DispatchQueue.main.async { self.view.dismissLoader() }
+
+                guard contacts != nil else { return }
+                debugPrint("CONTACTS FETCHED")
                 
-                allGroups = ContactsManager.sort(contacts: allContacts, by: .firstNameAscending)
-                filteredGroups.append(contentsOf: allGroups)
-                
+                self.allContacts.removeAll()
+                self.allGroups.removeAll()
+                self.filteredGroups.removeAll()
+
+                self.allContacts.append(contentsOf: contacts!)
+                RealmManager.deleteAllContacts()
+                RealmManager.insert(contacts: self.allContacts)
+
+                self.allGroups = ContactsManager.sort(contacts: self.allContacts)
+                self.filteredGroups.append(contentsOf: self.allGroups)
+                self.isContactsUpdated = false
+
                 DispatchQueue.main.async {
                     self.permissionView.isHidden = true
                     self.contentStack.isHidden = false
-                    self.footerLabel.text = "\(self.allContacts.count) contacts"
                     self.tableView.reloadData()
                 }
-                
-            case .notDetermined:
+            }
+            
+            // Updating bool value after a delay to avoid multiple update contacts notification
+            // This is a system issue
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.isContactsUpdated = false
+            }
+                            
+        case .notDetermined:
+            if !isBackground {
                 self.permissionActionButton.setTitle("Allow", for: [])
                 self.permissionActionButton.backgroundColor = .systemBlue
                 self.permissionView.isHidden = false
                 self.contentStack.isHidden = true
-                
-            case .denied:
+            } else {
+                self.isContactsUpdated = false
+                ContactsManager.getPermission { isGranted in
+                    self.updateUI()
+                    if isGranted { self.fetchContactsFromPhone() }
+                }
+            }
+            
+        case .denied:
+            if !isBackground {
                 self.permissionActionButton.setTitle("Open Settings", for: [])
                 self.permissionActionButton.backgroundColor = .systemRed
                 self.permissionView.isHidden = false
                 self.contentStack.isHidden = true
+            } else {
+                self.isContactsUpdated = false
+                let message = "You made some changes in your phone contacts and its not reflected here because permission is denied for ContactsApp"
+                showOpenSettingsAlert(message: message)
             }
+        }
+    }
+    
+    @objc private func refreshContacts() {
+        // Ignore multiple calls from NotificationCenter
+        if !isContactsUpdated {
+            debugPrint("REFRESHING CONTACTS FROM PHONE")
+            
+            isContactsUpdated = true
+            fetchContactsFromPhone(isBackground: true)
         }
     }
     
@@ -322,11 +378,23 @@ extension ContactsListViewController {
         }
     }
     
-    private func showContactDetailViewController(contact: ContactDetailEntity) {
+    private func showContactDetailViewController(contact: ContactDetail) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let con = storyBoard.instantiateViewController(withIdentifier: "ContactDetailViewController") as! ContactDetailViewController
         con.contact = contact
         DispatchQueue.main.async { self.present(con, animated: true, completion: nil) }
+    }
+    
+    private func showOpenSettingsAlert(message: String) {
+        let title = "Alert!!!"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let openSettingsAction = UIAlertAction(title: "Open Settings", style: .default) { _ in
+            self.openSettings()
+        }
+        alert.addAction(okAction)
+        alert.addAction(openSettingsAction)
+        DispatchQueue.main.async { self.present(alert, animated: true, completion: nil) }
     }
     
 }
@@ -352,7 +420,7 @@ extension ContactsListViewController: UITableViewDataSource {
     }
     
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        return ["#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     }
     
     func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {

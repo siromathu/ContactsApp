@@ -40,62 +40,60 @@ enum ContactsManager {
         }
     }
     
-    static func fetchAll() -> [ContactDetailEntity] {
-        var contacts = [ContactDetailEntity]()
-        
+    static func fetchAll(completion: @escaping (([ContactDetail]?) -> Void)) {
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { isGranted, error in
             if isGranted {
-                let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey, CNContactImageDataKey, CNContactThumbnailImageDataKey]
+                let keys = [CNContactIdentifierKey, CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey, CNContactImageDataKey, CNContactThumbnailImageDataKey]
                 let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
                 request.sortOrder = .userDefault
                 
                 do {
+                    var contacts = [ContactDetail]()
                     try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                        let newContact = ContactDetailEntity()
+                        var newContact = ContactDetail()
+                        newContact.id = contact.identifier
                         newContact.firstName = contact.givenName
                         newContact.lastName = contact.familyName
                         newContact.thumbnailImageData = contact.thumbnailImageData
                         newContact.profileImageData = contact.imageData
                         
-                        let numbers = contact.phoneNumbers.compactMap({ number -> ContactItemEntity in
+                        newContact.numbers = contact.phoneNumbers.compactMap({ number -> ContactItem in
                             let localizedLabel = CNLabeledValue<NSString>.localizedString(forLabel: number.label ?? "")
-                            let entity = ContactItemEntity()
-                            entity.label = localizedLabel
-                            entity.value = number.value.stringValue
-                            return entity
+                            return ContactItem(label: localizedLabel, value: number.value.stringValue)
                         })
-                        newContact.numbers.append(objectsIn: numbers)
                         
-                        let emails = contact.emailAddresses.compactMap({ email -> ContactItemEntity in
+                        newContact.emails = contact.emailAddresses.compactMap({ email -> ContactItem in
                             let localizedLabel = CNLabeledValue<NSString>.localizedString(forLabel: email.label ?? "")
-                            let entity = ContactItemEntity()
-                            entity.label = localizedLabel
-                            entity.value = String(email.value)
-                            return entity
+                            return ContactItem(label: localizedLabel, value: String(email.value))
                         })
-                        newContact.emails.append(objectsIn: emails)
                         
                         contacts.append(newContact)
                     })
                     
+                    completion(contacts)
+                    
                 } catch let error {
                     debugPrint("Failed to enumerate contact", error)
+                    completion(nil)
                 }
+                
+            } else {
+                debugPrint("Permission denied")
+                completion(nil)
             }
         }
-        
-        return contacts
     }
     
-    static func sort(contacts: [ContactDetailEntity], by type: ContactSortType) -> [ContactGroup] {
+    static func sort(contacts: [ContactDetail]) -> [ContactGroup] {
         // Separate contacts based on first character of first name
         let grouped = Dictionary(grouping: contacts, by: { $0.firstName!.first })
         var contactsGroups = [ContactGroup]()
         for item in grouped {
             var newGroup = ContactGroup()
             newGroup.title = item.key != nil ? String(item.key!) : "#"
-            newGroup.contacts = item.value
+            let sortedContacts = item.value.sorted(by: { $0.getFullName() < $1.getFullName() })
+            newGroup.contacts = sortedContacts
             contactsGroups.append(newGroup)
         }
         

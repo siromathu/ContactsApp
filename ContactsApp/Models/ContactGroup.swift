@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct ContactGroup {
+struct ContactGroup: Equatable {
     
     var title: String?
     
-    var contacts = [ContactDetailEntity]()
+    var contacts = [ContactDetail]()
     
 }
