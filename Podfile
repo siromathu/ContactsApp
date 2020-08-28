@@ -14,7 +14,7 @@ target 'ContactsApp' do
     inherit! :search_paths
     # Pods for testing
     pod 'TinyConstraints'
-    pod 'Realm/Headers'
+    pod 'RealmSwift'
     pod 'KeychainSwift'
   end
 

@@ -9,7 +9,6 @@ PODS:
 
 DEPENDENCIES:
   - KeychainSwift
-  - Realm/Headers
   - RealmSwift
   - TinyConstraints
 
@@ -26,6 +25,6 @@ SPEC CHECKSUMS:
   RealmSwift: 493c9f089cd3893b3959007973c0e4f640906ba0
   TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
 
-PODFILE CHECKSUM: b0b3f2b9277ae55f1cf85c351d5e35ff15e8dea3
+PODFILE CHECKSUM: 033227a0d178a34b32f1ed7011835f85767d8aeb
 
 COCOAPODS: 1.8.4
